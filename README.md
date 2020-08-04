@@ -1,1 +1,1 @@
-This is a dashboard for your nuggets.
+# This is a web dashboard for your nuggets.
