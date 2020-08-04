@@ -4,10 +4,12 @@ import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
 import MinimizeIcon from "@material-ui/icons/Minimize";
 
+import api from "../api/api";
+
 function CreateNugget(props) {
   const [newNugget, setNewNugget] = useState({
-    content: "",
-    title: ""
+    title: "",
+    content: ""
   });
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -22,20 +24,39 @@ function CreateNugget(props) {
     });
   }
 
-  function handleClick(event) {
+  // function handleClick(event) {
+  //   props.addNewNugget(newNugget);
+  //   setNewNugget({
+  //     content: "",
+  //     title: ""
+  //   });
+  //   event.preventDefault();
+  // }
+
+  async function handleIncludeNugget() {
     props.addNewNugget(newNugget);
-    setNewNugget({
-      content: "",
-      title: ""
+    const { title, content } = newNugget;
+    const payload = { title, content };
+    console.log("handled");
+
+    await api.insertNugget(payload).then(res => {
+      console.log("Nugget saved to database!");
+      setNewNugget({
+        content: "",
+        title: ""
+      });
+      // event.preventDefault()
     });
-    event.preventDefault();
   }
 
   return (
     <div>
       <form className="create-nugget">
-        <Zoom in={isExpanded? true : false}>
-          <MinimizeIcon id="minimize-icon" onClick={() => setIsExpanded(false)} />
+        <Zoom in={isExpanded ? true : false}>
+          <MinimizeIcon
+            id="minimize-icon"
+            onClick={() => setIsExpanded(false)}
+          />
         </Zoom>
         {isExpanded && (
           <input
@@ -56,7 +77,7 @@ function CreateNugget(props) {
           onClick={() => setIsExpanded(true)}
         />
         <Zoom in={isExpanded ? true : false}>
-          <Fab onClick={handleClick}>
+          <Fab onClick={handleIncludeNugget}>
             <AddIcon />
           </Fab>
         </Zoom>

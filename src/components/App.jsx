@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Suspense, useCallback } from "react";
-import Nugget from "./Nugget";
+import api from "../api/api";
+
+import Nugget2 from "./Nugget";
 import CreateNugget from "./CreateNugget";
 import Model from "./Model";
 import Header from "./Header";
@@ -7,7 +9,7 @@ import Footer from "./Footer";
 import CircularProgress from "./CircularProgress";
 
 function App() {
-  const [modelsData, setModelsData] = useState([]);
+  // const [modelsData, setModelsData] = useState([]);
   const [randomModel, setRandomModel] = useState([]);
   const [nuggets, setNuggets] = useState([]);
 
@@ -18,12 +20,25 @@ function App() {
   }
 
   function deleteNugget(id) {
-    setNuggets(prevValues => {
-      return prevValues.filter((nugget, index) => {
-        return index !== id;
-      });
-    });
+    api.deleteNuggetById(id)
+    fetchNuggets()
   }
+
+  // function editNugget(id) {
+  //   api.updateNuggetById(id)
+  //   fetchNuggets()
+  //   console.log("called edit");
+  // }
+
+  useEffect(() => {
+    fetchNuggets();
+  }, []);
+
+  async function fetchNuggets() {
+    await api.getAllNuggets().then(nuggets => {
+      setNuggets(nuggets.data.data);
+    })
+  };
 
   const fetchModel = useCallback(
     () =>
@@ -31,7 +46,7 @@ function App() {
         .then(results => results.json())
         .then(models => {
           let randomNumber = Math.floor(Math.random() * 113 + 1);
-          setModelsData(models);
+          // setModelsData(models);
           setRandomModel(models[randomNumber]);
         })
         .catch(error => {
@@ -50,6 +65,7 @@ function App() {
   return (
     <div>
       <Header />
+      <CreateNugget addNewNugget={addNewNugget} />
       <Suspense fallback={<CircularProgress />}>
         <Model
           key={randomModel.index}
@@ -60,16 +76,20 @@ function App() {
           fetchModel={fetchModel}
         />
       </Suspense>
-      <CreateNugget addNewNugget={addNewNugget} />
-      {nuggets.map((nugget, index) => (
-        <Nugget
-          key={index}
+
+      {nuggets.map(function(nugget) {
+        return(
+        <Nugget2
+          nugget={nugget}
+          key={nugget._id}
           title={nugget.title}
           content={nugget.content}
           deleteNugget={deleteNugget}
-          id={index}
-        />
-      ))}
+          id={nugget._id}
+          // editNugget={editNugget}
+        />)
+      })}
+
 
       <Footer />
     </div>

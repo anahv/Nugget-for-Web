@@ -1,5 +1,5 @@
 import React from "react"
-import nuggetTransparent from "./nuggetTransparent.png"
+import nuggetTransparent from "./nuggetTransparent2.png"
 
 function Header() {
   return (
