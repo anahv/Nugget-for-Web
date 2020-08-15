@@ -1,21 +1,27 @@
 import axios from 'axios'
 
-const api = axios.create({
-    baseURL: 'http://localhost:3001/api',
+const user  = axios.create({
+  baseURL: "http://localhost:3001/user"
 })
 
-export const insertNugget = payload => api.post(`/nuggets`, payload)
-export const getAllNuggets = () => api.get(`/nuggets`)
-export const updateNuggetById = (id, payload) => api.put(`/nuggets/${id}`, payload)
-export const deleteNuggetById = id => api.delete(`/nuggets/${id}`)
-export const getNuggetById = id => api.get(`/nuggets/${id}`)
+export const register = payload => user.post(`/register`, payload);
+export const login = payload => user.post(`/login`, payload);
+export const logout = () => user.get("/logout")
+export const checkAuthentication = () => user.get("/checkAuthentication", {withCredentials: true})
+export const addUserNugget = (id, payload) => user.post(`/userNuggets/${id}`, payload)
+export const getUserNuggets = (id) => user.get(`/userNuggets/${id}`)
+export const updateUserNugget = (id, payload) => user.put(`/userNuggets/${id}`, payload)
+export const deleteUserNugget = (id, payload) => user.post(`/deleteUserNugget/${id}`, payload)
 
 const apis = {
-    insertNugget,
-    getAllNuggets,
-    updateNuggetById,
-    deleteNuggetById,
-    getNuggetById,
+    register,
+    login,
+    logout,
+    checkAuthentication,
+    addUserNugget,
+    getUserNuggets,
+    updateUserNugget,
+    deleteUserNugget,
 }
 
 export default apis

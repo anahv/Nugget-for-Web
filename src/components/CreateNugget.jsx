@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
 import MinimizeIcon from "@material-ui/icons/Minimize";
+import AppContext from "../libs/contextLib";
 
 import api from "../api/api";
 
 function CreateNugget(props) {
   const [newNugget, setNewNugget] = useState({
     title: "",
-    content: ""
+    content: "",
   });
 
   const [isExpanded, setIsExpanded] = useState(false);
+  const { userId } = useContext(AppContext);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -24,29 +26,21 @@ function CreateNugget(props) {
     });
   }
 
-  // function handleClick(event) {
-  //   props.addNewNugget(newNugget);
-  //   setNewNugget({
-  //     content: "",
-  //     title: ""
-  //   });
-  //   event.preventDefault();
-  // }
-
   async function handleIncludeNugget() {
-    props.addNewNugget(newNugget);
     const { title, content } = newNugget;
     const payload = { title, content };
-    console.log("handled");
 
-    await api.insertNugget(payload).then(res => {
-      console.log("Nugget saved to database!");
+    await api.addUserNugget(userId, payload).then(res=>{
+      const {id, date} = res.data;
+      newNugget._id = id;
+      newNugget.date = date;
+      props.addNewNugget(newNugget);
       setNewNugget({
         content: "",
-        title: ""
+        title: "",
       });
-      // event.preventDefault()
-    });
+    })
+    setIsExpanded(false)
   }
 
   return (
