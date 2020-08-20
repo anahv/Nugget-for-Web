@@ -143,7 +143,7 @@ function Register() {
                 <a
                   className="btn btn-block btn-social btn-google"
                   role="button"
-                  href="http://localhost:3001/user/auth/google"
+                  href="http://nuggetapp.herokuapp.com/user/auth/google"
                 ><img className="btn-social-icon" src={googleWhite} alt="Google icon" />
                   Sign up with Google
                 </a>

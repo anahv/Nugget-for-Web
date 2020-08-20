@@ -113,7 +113,7 @@ function Login() {
               <div className="card-body">
                 <a
                   className="btn btn-block btn-social btn-google"
-                  href="http://localhost:3001/user/auth/google"
+                  href="http://nuggetapp.herokuapp.com/user/auth/google"
                   role="button"
                 ><img className="btn-social-icon" src={googleWhite} alt="Google icon" />
                 Log in with Google</a>
