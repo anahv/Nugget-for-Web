@@ -2,10 +2,11 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+// import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { register } from "../api/api";
 import AppContext from "../libs/contextLib";
-import googleWhite from "./googleWhite.svg"
+import googleWhite from "./googleWhite.svg";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -24,7 +25,7 @@ function Register() {
 
   const { setIsAuthenticated, setUserId } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const [fields, setFields] = useState({
     username: "",
@@ -57,9 +58,9 @@ function Register() {
       await register(fields).then(res => {
         if (res.data.error) {
           setError(res.data.error.message);
-          return
+          return;
         }
-        setUserId(res.data.id)
+        setUserId(res.data.id);
         setIsAuthenticated(true);
         history.push("/");
       });
@@ -71,6 +72,7 @@ function Register() {
 
   return (
     <div>
+      {isLoading && <LinearProgress />}
       <div className="container mt-5 signup">
         <h1>Welcome!</h1>
         <div className="row">
@@ -117,15 +119,8 @@ function Register() {
                     disabled={!validateForm()}
                   >
                     Sign up{" "}
-                    {isLoading && (
-                      <CircularProgress
-                        className={classes.root}
-                        color="secondary"
-                        size={20}
-                      />
-                    )}
                   </Button>
-                  {(error !== "") && <p id="error">{error}</p>}
+                  {error !== "" && <p id="error">{error}</p>}
                   <p>
                     Already have an account?{" "}
                     <LinkContainer to="/login">
@@ -144,7 +139,12 @@ function Register() {
                   className="btn btn-block btn-social btn-google"
                   role="button"
                   href="http://nuggetapp.herokuapp.com/user/auth/google"
-                ><img className="btn-social-icon" src={googleWhite} alt="Google icon" />
+                >
+                  <img
+                    className="btn-social-icon"
+                    src={googleWhite}
+                    alt="Google icon"
+                  />
                   Sign up with Google
                 </a>
               </div>

@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import AppContext from "../libs/contextLib";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { login } from "../api/api";
-import googleWhite from "./googleWhite.svg"
+import googleWhite from "./googleWhite.svg";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,7 +24,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { setIsAuthenticated, setUserId } = useContext(AppContext);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   function validateForm() {
     return username.match(/[\w-]+@([\w-]+\.)+[\w-]+/) && password.length > 0;
@@ -38,9 +38,9 @@ function Login() {
       await login(payload).then(res => {
         if (res.data.error) {
           setError(res.data.error);
-          return
+          return;
         }
-        setUserId(res.data.id)
+        setUserId(res.data.id);
         setIsAuthenticated(true);
         history.push("/");
       });
@@ -52,6 +52,7 @@ function Login() {
 
   return (
     <div>
+      {isLoading && <LinearProgress />}
       <div className="container mt-5 signup">
         <h1>Welcome back!</h1>
 
@@ -88,15 +89,8 @@ function Login() {
                     disabled={!validateForm()}
                   >
                     Log in{" "}
-                    {isLoading && (
-                      <CircularProgress
-                        className={classes.root}
-                        color="secondary"
-                        size={20}
-                      />
-                    )}
                   </Button>
-                  {(error !== "") && <p id="error">{error}</p>}
+                  {error !== "" && <p id="error">{error}</p>}
                   <p>
                     New to Nugget?{" "}
                     <LinkContainer to="/register">
@@ -115,8 +109,14 @@ function Login() {
                   className="btn btn-block btn-social btn-google"
                   href="http://nuggetapp.herokuapp.com/user/auth/google"
                   role="button"
-                ><img className="btn-social-icon" src={googleWhite} alt="Google icon" />
-                Log in with Google</a>
+                >
+                  <img
+                    className="btn-social-icon"
+                    src={googleWhite}
+                    alt="Google icon"
+                  />
+                  Log in with Google
+                </a>
               </div>
             </div>
           </div>
@@ -127,3 +127,11 @@ function Login() {
 }
 
 export default Login;
+
+//within button tag:
+// {isLoading && (
+//   <CircularProgress
+//     className={classes.root}
+//     size={20}
+//   />
+// )}
