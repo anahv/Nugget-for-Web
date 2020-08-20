@@ -87,7 +87,7 @@ function Login() {
                     color="primary"
                     disabled={!validateForm()}
                   >
-                    Login{" "}
+                    Log in{" "}
                     {isLoading && (
                       <CircularProgress
                         className={classes.root}
@@ -116,7 +116,7 @@ function Login() {
                   href="http://localhost:3001/user/auth/google"
                   role="button"
                 ><img className="btn-social-icon" src={googleWhite} alt="Google icon" />
-                Log In with Google</a>
+                Log in with Google</a>
               </div>
             </div>
           </div>

@@ -22,7 +22,8 @@ app.use(express.static(__dirname + "/build"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "http://nuggetapp.herokuapp.com/");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -92,7 +93,8 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/user/auth/google/nugget",
+      // callbackURL: "http://localhost:3001/user/auth/google/nugget",
+      callbackURL: "http://nuggetapp.herokuapp.com/user/auth/google/nugget",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
     },
     function(accessToken, refreshToken, profile, done) {
@@ -113,10 +115,12 @@ userRouter.get(
 userRouter.get(
   "/auth/google/nugget",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login"
+    // failureRedirect: "http://localhost:3000/login"
+    failureRedirect: "/login"
   }),
   function(req, res) {
-    res.redirect("http://localhost:3000/");
+    // res.redirect("http://localhost:3000/");
+    res.redirect("/");
   }
 );
 

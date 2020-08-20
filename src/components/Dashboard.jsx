@@ -42,7 +42,7 @@ function App() {
 
   async function fetchModel() {
     setModelsAreLoading(true);
-    await fetch("https://nugget-api.herokuapp.com/nuggets")
+    await fetch("https://mental-models.herokuapp.com/nuggets")
       .then(results => results.json())
       .then(models => {
         let randomNumber = Math.floor(Math.random() * 113 + 1);
