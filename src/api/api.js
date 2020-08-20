@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const user  = axios.create({
-  baseURL: "http://localhost:3001/user"
+  baseURL: "http://nuggetapp.herokuapp.com/user"
 })
 
 export const register = payload => user.post(`/register`, payload);

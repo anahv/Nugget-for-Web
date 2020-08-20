@@ -5,8 +5,7 @@ const port = process.env.PORT || 3001;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-
-const { db, router, myNuggetSchema, Nugget } = require("./db/nuggets");
+// const { db, router, myNuggetSchema, Nugget } = require("./db/nuggets");
 
 const session = require("express-session");
 const passport = require("passport");
@@ -48,9 +47,31 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+mongoose
+  .connect(
+    process.env.DB_URL,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .catch(error => console.error("Connection error" + error.message));
+
+const db = mongoose.connection;
+
 db.on("error", console.error.bind(console, "Mongo DB connection error: "));
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
+
+const myNuggetSchema = new mongoose.Schema({
+  title: String,
+  content: String,
+  example: String,
+  reminderOn: Boolean,
+  reminder: String,
+  label: String,
+  date: String,
+  color: String
+});
+
+const Nugget = mongoose.model("myNuggets", myNuggetSchema);
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -288,7 +309,7 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/build/index.html");
 });
 
-app.use("/api", router);
+// app.use("/api", router);
 
 app.use("/user", userRouter);
 
