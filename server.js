@@ -304,7 +304,7 @@ userRouter.get("/checkAuthentication", function(req, res) {
   }
 });
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(__dirname + "/build/index.html");
 });
 
