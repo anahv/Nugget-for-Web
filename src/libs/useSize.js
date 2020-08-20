@@ -32,5 +32,6 @@ export default function useSize() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return size;
 }
