@@ -20,8 +20,8 @@ app.use(express.static(__dirname + "/build"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
-  // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Origin", "https://nuggetapp.herokuapp.com");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.setHeader("Access-Control-Allow-Origin", "https://nuggetapp.herokuapp.com");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
@@ -304,13 +304,13 @@ userRouter.get("/checkAuthentication", function(req, res) {
   }
 });
 
+app.use("/user", userRouter);
+
 app.get("*", (req, res) => {
   res.sendFile(__dirname + "/build/index.html");
 });
 
 // app.use("/api", router);
-
-app.use("/user", userRouter);
 
 app.listen(port, () => {
   console.log(`Server is up on port ${port}!`);
