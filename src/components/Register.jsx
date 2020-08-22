@@ -8,20 +8,8 @@ import { register } from "../api/api";
 import AppContext from "../libs/contextLib";
 import googleWhite from "./googleWhite.svg";
 
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    "& > * + *": {
-      marginLeft: theme.spacing(2)
-    }
-  }
-}));
-
 function Register() {
   const history = useHistory();
-  const classes = useStyles();
 
   const { setIsAuthenticated, setUserId } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);

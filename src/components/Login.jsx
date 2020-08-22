@@ -4,21 +4,10 @@ import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import AppContext from "../libs/contextLib";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { login } from "../api/api";
 import googleWhite from "./googleWhite.svg";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: "flex",
-    "& > * + *": {
-      marginLeft: theme.spacing(2)
-    }
-  }
-}));
-
 function Login() {
-  const classes = useStyles();
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -108,8 +97,7 @@ function Login() {
                 <a
                   className="btn btn-block btn-social btn-google"
                   href="http://nuggetapp.herokuapp.com/user/auth/google"
-                  role="button"
-                >
+                  role="button">
                   <img
                     className="btn-social-icon"
                     src={googleWhite}
