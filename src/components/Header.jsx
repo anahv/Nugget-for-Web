@@ -16,12 +16,6 @@ function Header(props) {
     AppContext
   );
 
-  // const [
-  //   browserSupportsNotifications,
-  //   setBrowserSupportsNotifications
-  // ] = useState(false);
-  // const [userAllowsNotifications, setUserAllowsNotifications] = useState(false);
-
   function handleLogout() {
     logout();
     setIsAuthenticated(false);
@@ -29,55 +23,42 @@ function Header(props) {
     history.push("/login");
   }
 
-  // function isPushNotificationSupported() {
-  //   setBrowserSupportsNotifications(
-  //     "serviceWorker" in navigator && "PushManager" in window
-  //   );
-  // }
-  //
-  // useEffect(
-  //   () => {
-  //     isPushNotificationSupported();
-  //     askUserPermission();
-  //     console.log(
-  //       "Browser supports notifications: " + browserSupportsNotifications
-  //     );
-  //     console.log("user accepted notifications: " + userAllowsNotifications);
-  //   },
-  //   [browserSupportsNotifications]
-  // );
+  const [
+    browserSupportsNotifications,
+    setBrowserSupportsNotifications
+  ] = useState(false);
 
-  // async function askUserPermission() {
-  //   const permission = await Notification.requestPermission();
-  //   setUserAllowsNotifications(permission);
-  //   console.log(permission);
-  //   return permission;
-  // }
-  //
-  // function registerServiceWorker() {
-  //   return navigator.serviceWorker.register("/serviceWorker.js");
-  // }
-  //
-  // async function createNotificationSubscription() {
-  //   const serviceWorker = await navigator.serviceWorker.ready;
-  //   const pushSubscription = await serviceWorker.pushManager.subscribe({
-  //     userVisibleOnly: true,
-  //     applicationServerKey: pushServerPublicKey
-  //   });
-  //   console.log(pushSubscription);
-  // }
+  const [userAllowsNotifications, setUserAllowsNotifications] = useState(false);
 
-  // {isAuthenticated &&
-  //   browserSupportsNotifications &&
-  //   userAllowsNotifications !== "granted" && (
-  //     <button
-  //       className="nav-link"
-  //       onClick={askUserPermission}
-  //       id="enableNotifications"
-  //     >
-  //       <AddAlertIcon />
-  //     </button>
-  //   )}
+  function isPushNotificationSupported() {
+    setBrowserSupportsNotifications(
+      // "serviceWorker" in navigator && "PushManager" in window
+      "Notification" in window
+    );
+  }
+
+  useEffect(
+    () => {
+      isPushNotificationSupported();
+      askUserPermission();
+      console.log(
+        "Browser supports notifications: " + browserSupportsNotifications
+      );
+      console.log("user accepted notifications: " + userAllowsNotifications);
+    },
+    [browserSupportsNotifications]
+  );
+
+  async function askUserPermission() {
+    const permission = await Notification.requestPermission();
+    setUserAllowsNotifications(permission);
+    console.log(permission);
+    return permission;
+  }
+
+  function showNotification() {
+    new Notification("Hello!")
+  }
 
   return (
     <header>
@@ -93,6 +74,29 @@ function Header(props) {
           Log out
         </button>
       )}
+
+      {isAuthenticated &&
+        browserSupportsNotifications &&
+        userAllowsNotifications !== "granted" && (
+          <button
+            className="nav-link"
+            onClick={askUserPermission}
+            id="enableNotifications"
+          >
+            <AddAlertIcon />
+          </button>
+        )}
+
+        {isAuthenticated &&
+          browserSupportsNotifications &&
+          userAllowsNotifications === "granted" && (
+            <button
+              className="nav-link"
+              onClick={showNotification}
+            >
+              <AddAlertIcon />Test
+            </button>
+          )}
 
     </header>
   );
