@@ -10,4 +10,4 @@ This app handles authentication with Passport.js and has Google log in available
 
 Tech stack: React.js, Express.js, Node.js, MongoDB, Mongoose, Passport.js
 
-Give it a go in http://nuggetapp.herokuapp.com/
+Give it a go in https://nuggetapp.herokuapp.com/
