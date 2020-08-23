@@ -75,31 +75,31 @@ function Header(props) {
         </button>
       )}
 
-      // {isAuthenticated &&
-      //   browserSupportsNotifications &&
-      //   userAllowsNotifications !== "granted" && (
-      //     <button
-      //       className="nav-link"
-      //       onClick={askUserPermission}
-      //       id="enableNotifications"
-      //     >
-      //       <AddAlertIcon />
-      //     </button>
-      //   )}
-      //
-      //   {isAuthenticated &&
-      //     browserSupportsNotifications &&
-      //     userAllowsNotifications === "granted" && (
-      //       <button
-      //         className="nav-link"
-      //         onClick={showNotification}
-      //       >
-      //         <AddAlertIcon />Test
-      //       </button>
-      //     )}
-
     </header>
   );
 }
+
+// {isAuthenticated &&
+//   browserSupportsNotifications &&
+//   userAllowsNotifications !== "granted" && (
+//     <button
+//       className="nav-link"
+//       onClick={askUserPermission}
+//       id="enableNotifications"
+//     >
+//       <AddAlertIcon />
+//     </button>
+//   )}
+//
+//   {isAuthenticated &&
+//     browserSupportsNotifications &&
+//     userAllowsNotifications === "granted" && (
+//       <button
+//         className="nav-link"
+//         onClick={showNotification}
+//       >
+//         <AddAlertIcon />Test
+//       </button>
+//     )}
 
 export default Header;
