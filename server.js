@@ -5,6 +5,8 @@ const port = process.env.PORT || 3001;
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const enforce = require('express-sslify');
+
 // const { db, router, myNuggetSchema, Nugget } = require("./db/nuggets");
 const session = require("express-session");
 const passport = require("passport");
@@ -15,6 +17,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 
 const app = express();
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 app.use(express.static(__dirname + "/build"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -64,7 +67,13 @@ const myNuggetSchema = new mongoose.Schema({
   content: String,
   example: String,
   reminderOn: Boolean,
-  reminder: String,
+
+  reminderMinute: String,
+  reminderHour: String,
+  reminderDay: String,
+  reminderMonth: String,
+  reminderYear: String,
+
   label: String,
   date: String,
   color: String
@@ -82,10 +91,12 @@ const userSchema = new mongoose.Schema({
 const options = {
   errorMessages: {
     MissingPasswordError: "No password was given",
-    AttemptTooSoonError: "This account is currently locked. Please try again later",
+    AttemptTooSoonError:
+      "This account is currently locked. Please try again later",
     TooManyAttemptsError:
       "This account was locked due to too many failed login attempts",
-    NoSaltValueStoredError: "Authentication was not possible. No salt value stored",
+    NoSaltValueStoredError:
+      "Authentication was not possible. No salt value stored",
     IncorrectPasswordError: "The username or password is incorrect :(",
     IncorrectUsernameError: "The username or password is incorrect :(",
     MissingUsernameError: "No username was given",
@@ -220,7 +231,13 @@ userRouter.put("/userNuggets/:id", function(req, res) {
   userId = req.params.id;
   User.findOneAndUpdate(
     { _id: req.params.id, "nuggets._id": _id },
-    { $set: { "nuggets.$.title": title, "nuggets.$.content": content, "nuggets.$.color": color } },
+    {
+      $set: {
+        "nuggets.$.title": title,
+        "nuggets.$.content": content,
+        "nuggets.$.color": color
+      }
+    },
     function(err, user) {
       user
         .save()
@@ -251,6 +268,51 @@ userRouter.post("/deleteUserNugget/:id", function(req, res) {
       }
     }
   );
+});
+
+// userRouter.get("/checkReminders/:id", function(req, res) {
+//   const { minuteCheck, hourCheck, dayCheck, monthCheck, yearCheck } = req.body;
+//   userId = req.params.id;
+//   User.find(
+//     {
+//       _id: userId,
+//       "nuggets.reminderMinute": minuteCheck,
+//       "nuggets.reminderHour": hourCheck,
+//       "nuggets.reminderDay": dayCheck,
+//       "nuggets.reminderMonth": monthCheck,
+//       "nuggets.reminderYear": yearCheck
+//     },
+//     {
+//       "nuggets.title": 1,
+//       "nuggets.content": 1,
+//       "nuggets.color": 1,
+//       "nuggets.date": 1
+//     },
+//   );
+// });
+
+userRouter.get("/checkReminders/:id", function(req, res) {
+  const { minuteCheck, hourCheck, dayCheck, monthCheck, yearCheck } = req.body;
+  userId = req.params.id;
+
+  // db.open(function(err,db){ // <------everything wrapped inside this function
+  // db.collection('User', function(err, collection) {
+  User.find({
+    _id: userId,
+    "nuggets.reminderMinute": minuteCheck,
+    "nuggets.reminderHour": hourCheck,
+    "nuggets.reminderDay": dayCheck,
+    "nuggets.reminderMonth": monthCheck,
+    "nuggets.reminderYear": yearCheck
+  }).exec(function(err, res) {
+    {
+      if (err) return handleError(err);
+      console.log(res);
+      return res.json({nuggets: res.nuggets})
+    }
+    // });
+    // });
+  });
 });
 
 userRouter.post("/register", function(req, res) {

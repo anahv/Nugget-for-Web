@@ -4,15 +4,16 @@ import { LinkContainer } from "react-router-bootstrap";
 import AppContext from "../libs/contextLib";
 import { useHistory } from "react-router-dom";
 import AddAlertIcon from "@material-ui/icons/AddAlert";
+// import Notification from "react-web-notification"
 
-import { logout } from "../api/api";
+import { logout, checkReminders } from "../api/api";
 
 // import SearchBar from "./SearchBar"
 // <SearchBar filterNuggets={props.filterNuggets} fetchNuggets={props.fetchNuggets}/>
 
 function Header(props) {
   const history = useHistory();
-  const { isAuthenticated, setIsAuthenticated, setUserId } = useContext(
+  const { isAuthenticated, setIsAuthenticated, setUserId, userId } = useContext(
     AppContext
   );
 
@@ -41,23 +42,40 @@ function Header(props) {
     () => {
       isPushNotificationSupported();
       askUserPermission();
-      console.log(
-        "Browser supports notifications: " + browserSupportsNotifications
-      );
-      console.log("user accepted notifications: " + userAllowsNotifications);
     },
-    [browserSupportsNotifications]
+    [browserSupportsNotifications, userAllowsNotifications]
   );
 
   async function askUserPermission() {
     const permission = await Notification.requestPermission();
     setUserAllowsNotifications(permission);
-    console.log(permission);
     return permission;
   }
 
   function showNotification() {
-    new Notification("Hello!")
+    const options = {
+      body: "Hello test body",
+      icon: nuggetTransparent
+    };
+    new Notification("Hello!", options);
+  }
+
+  // chrome://flags/ Enable native notifications > Disabled
+
+  function checkNotifications() {
+    const now = new Date();
+    const minuteCheck = now.getMinutes();
+    const hourCheck = now.getHours();
+    const dayCheck = now.getDate();
+    const monthCheck = now.getMonth();
+    const yearCheck = now.getFullYear();
+
+    const payload = { minuteCheck, hourCheck, dayCheck, monthCheck, yearCheck };
+
+    checkReminders(userId, payload).then(res => {
+      console.log(res.data);
+      console.log("checked reminders");
+    });
   }
 
   return (
@@ -75,31 +93,43 @@ function Header(props) {
         </button>
       )}
 
+      {
+        // {isAuthenticated &&
+        //   browserSupportsNotifications &&
+        //   userAllowsNotifications !== "granted" && (
+        //     <button
+        //       className="nav-link"
+        //       onClick={askUserPermission}
+        //       id="enableNotifications"
+        //     >
+        //       <AddAlertIcon />
+        //     </button>
+        //   )}
+        //
+        // {isAuthenticated &&
+        //   browserSupportsNotifications &&
+        //   userAllowsNotifications === "granted" && (
+        //     <button
+        //       className="nav-link"
+        //       onClick={showNotification}
+        //     >
+        //       Test
+        //     </button>
+        //   )}
+        //
+        //   {isAuthenticated &&
+        //     browserSupportsNotifications &&
+        //     userAllowsNotifications === "granted" && (
+        //       <button
+        //         className="nav-link"
+        //         onClick={checkNotifications}
+        //       >
+        //         Retrieve reminders
+        //       </button>
+        //     )}
+      }
     </header>
   );
 }
-
-// {isAuthenticated &&
-//   browserSupportsNotifications &&
-//   userAllowsNotifications !== "granted" && (
-//     <button
-//       className="nav-link"
-//       onClick={askUserPermission}
-//       id="enableNotifications"
-//     >
-//       <AddAlertIcon />
-//     </button>
-//   )}
-//
-//   {isAuthenticated &&
-//     browserSupportsNotifications &&
-//     userAllowsNotifications === "granted" && (
-//       <button
-//         className="nav-link"
-//         onClick={showNotification}
-//       >
-//         <AddAlertIcon />Test
-//       </button>
-//     )}
 
 export default Header;

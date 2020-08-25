@@ -27,8 +27,21 @@ function CreateNugget(props) {
   }
 
   async function handleIncludeNugget() {
+
+    // Get random increment between 3 and 12 months
+    const randomIncrement = Math.floor(Math.random() * (9 - 3) + 3)
+    const currentDate = new Date()
+    const reminderDate = new Date(currentDate.setMonth(currentDate.getMonth() + randomIncrement))
+    const reminderMinute = reminderDate.getMinutes()
+    const reminderHour = reminderDate.getHours()
+    const reminderDay = reminderDate.getDate()
+    const reminderMonth = reminderDate.getMonth()
+    const reminderYear = reminderDate.getFullYear()
+
     const { title, content } = newNugget;
-    const payload = { title, content };
+    // const payload = { title, content };
+    const payload = { title, content, reminderMinute, reminderHour, reminderDay,
+    reminderMonth, reminderYear}
 
     await api.addUserNugget(userId, payload).then(res=>{
       const {id, date} = res.data;

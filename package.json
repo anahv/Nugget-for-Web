@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "express-sslify": "^1.2.0",
     "https": "^1.0.0",
     "mongoose": "^5.9.27",
     "mongoose-findorcreate": "^3.0.0",
@@ -34,7 +35,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-stack-grid": "^0.7.1",
-    "react-textarea-autosize": "^8.2.0"
+    "react-textarea-autosize": "^8.2.0",
+    "react-web-notification": "^0.8.0"
   },
   "scripts": {
     "start": "react-scripts start",

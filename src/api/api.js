@@ -13,6 +13,7 @@ export const addUserNugget = (id, payload) => user.post(`/userNuggets/${id}`, pa
 export const getUserNuggets = (id) => user.get(`/userNuggets/${id}`)
 export const updateUserNugget = (id, payload) => user.put(`/userNuggets/${id}`, payload)
 export const deleteUserNugget = (id, payload) => user.post(`/deleteUserNugget/${id}`, payload)
+export const checkReminders = (id, payload) => user.get(`/checkReminders/${id}`, payload)
 
 const apis = {
     register,

@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import { checkAuthentication } from "../api/api";
 
 import AppContext from "../libs/contextLib";
-import Routes from "../routes"
+import Routes from "../routes";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,7 +20,8 @@ function App() {
     try {
       await checkAuthentication().then(res => {
         setIsAuthenticated(res.data.authenticated);
-        setUserId(res.data.id)
+        setUserId(res.data.id);
+        // checkNotifications()
       });
     } catch (e) {
       if (e !== "No current user") {
@@ -32,13 +33,13 @@ function App() {
 
   return (
     !isAuthenticating && (
-        <AppContext.Provider
-          value={{ isAuthenticated, setIsAuthenticated, userId, setUserId }}
-        >
-          <Header />
-          <Routes />
-          <Footer />
-        </AppContext.Provider>
+      <AppContext.Provider
+        value={{ isAuthenticated, setIsAuthenticated, userId, setUserId }}
+      >
+        <Header />
+        <Routes />
+        <Footer />
+      </AppContext.Provider>
     )
   );
 }

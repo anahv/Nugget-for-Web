@@ -8,7 +8,6 @@ import AppContext from "./libs/contextLib"
 
 export default function Routes() {
   const { isAuthenticated } = useContext(AppContext);
-  console.log(isAuthenticated);
   return (
     <Switch>
       <Route exact path="/">
