@@ -188,17 +188,20 @@ fieldset[disabled] .btn-google.focus {
   box-shadow: 0 2px 5px #ccc;
   padding: 10px;
   padding-bottom: 40px;
+  color: #212529 !important;
 }
 
 .note h1 {
   font-size: 1.4em;
   font-weight: 600;
   margin-bottom: 15px;
+  color: #212529 !important;
 }
 
 .note h2 {
   font-size: 1.2em;
   margin-bottom: 6px;
+  color: #212529 !important;
 }
 
 .note p {
@@ -206,6 +209,7 @@ fieldset[disabled] .btn-google.focus {
   margin-bottom: 10px;
   white-space: pre-wrap;
   word-wrap: break-word;
+  color: #212529 !important;
 }
 
 .note textarea {
@@ -402,6 +406,10 @@ form p {
   #headerLogo {
     margin-left: 0px;
     margin-top: -5px;
+  }
+
+  header h1 {
+    margin-top:
   }
 
   .nav-link {
