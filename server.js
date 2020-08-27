@@ -6,20 +6,16 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const enforce = require('express-sslify');
-
 // const { db, router, myNuggetSchema, Nugget } = require("./db/nuggets");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
-
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-
 const findOrCreate = require("mongoose-findorcreate");
-
 const app = express();
+
 app.use(enforce.HTTPS({ trustProtoHeader: true }))
 app.use(express.static(__dirname + "/build"));
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
@@ -37,7 +33,6 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(cookieParser());
-
 app.use(
   session({
     secret: process.env.SECRET,
@@ -45,7 +40,6 @@ app.use(
     saveUninitialized: false
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -57,7 +51,6 @@ mongoose
   .catch(error => console.error("Connection error" + error.message));
 
 const db = mongoose.connection;
-
 db.on("error", console.error.bind(console, "Mongo DB connection error: "));
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
@@ -67,13 +60,11 @@ const myNuggetSchema = new mongoose.Schema({
   content: String,
   example: String,
   reminderOn: Boolean,
-
   reminderMinute: String,
   reminderHour: String,
   reminderDay: String,
   reminderMonth: String,
   reminderYear: String,
-
   label: String,
   date: String,
   color: String
@@ -146,11 +137,9 @@ userRouter.get(
 userRouter.get(
   "/auth/google/nugget",
   passport.authenticate("google", {
-    // failureRedirect: "http://localhost:3000/login"
     failureRedirect: "/login"
   }),
   function(req, res) {
-    // res.redirect("http://localhost:3000/");
     res.redirect("/");
   }
 );
@@ -291,29 +280,24 @@ userRouter.post("/deleteUserNugget/:id", function(req, res) {
 //   );
 // });
 
-userRouter.get("/checkReminders/:id", function(req, res) {
-  const { minuteCheck, hourCheck, dayCheck, monthCheck, yearCheck } = req.body;
-  userId = req.params.id;
-
-  // db.open(function(err,db){ // <------everything wrapped inside this function
-  // db.collection('User', function(err, collection) {
-  User.find({
-    _id: userId,
-    "nuggets.reminderMinute": minuteCheck,
-    "nuggets.reminderHour": hourCheck,
-    "nuggets.reminderDay": dayCheck,
-    "nuggets.reminderMonth": monthCheck,
-    "nuggets.reminderYear": yearCheck
-  }).exec(function(err, res) {
-    {
-      if (err) return handleError(err);
-      console.log(res);
-      return res.json({nuggets: res.nuggets})
-    }
-    // });
-    // });
-  });
-});
+// userRouter.get("/checkReminders/:id", function(req, res) {
+//   const { minuteCheck, hourCheck, dayCheck, monthCheck, yearCheck } = req.body;
+//   userId = req.params.id;
+//   User.find({
+//     _id: userId,
+//     "nuggets.reminderMinute": minuteCheck,
+//     "nuggets.reminderHour": hourCheck,
+//     "nuggets.reminderDay": dayCheck,
+//     "nuggets.reminderMonth": monthCheck,
+//     "nuggets.reminderYear": yearCheck
+//   }).exec(function(err, res) {
+//     {
+//       if (err) return handleError(err);
+//       console.log(res);
+//       return res.json({nuggets: res.nuggets})
+//     }
+//   });
+// });
 
 userRouter.post("/register", function(req, res) {
   User.register({ username: req.body.username }, req.body.password, function(
