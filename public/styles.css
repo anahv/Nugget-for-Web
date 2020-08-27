@@ -196,6 +196,7 @@ fieldset[disabled] .btn-google.focus {
   padding-bottom: 40px;
   color: #212529 !important;
   opacity: 1 !important;
+  -webkit-text-fill-color: #212529 !important;
 }
 
 .note h1 {
@@ -204,6 +205,7 @@ fieldset[disabled] .btn-google.focus {
   margin-bottom: 15px;
   color: #212529 !important;
   opacity: 1 !important;
+  -webkit-text-fill-color: #212529 !important;
 }
 
 .note h2 {
@@ -220,6 +222,7 @@ fieldset[disabled] .btn-google.focus {
   word-wrap: break-word;
   color: #212529 !important;
   opacity: 1 !important;
+  -webkit-text-fill-color: #212529 !important;
 }
 
 .note textarea {
@@ -234,6 +237,7 @@ fieldset[disabled] .btn-google.focus {
   color: #212529;
   background-color: rgba(0, 0, 0, 0.05);
   opacity: 1 !important;
+  -webkit-text-fill-color: #212529 !important;
 }
 
 .note-title {
@@ -243,6 +247,7 @@ fieldset[disabled] .btn-google.focus {
   border: none;
   color: #212529;
   opacity: 1 !important;
+  -webkit-text-fill-color: #212529 !important;
 }
 
 .note textarea:disabled {
