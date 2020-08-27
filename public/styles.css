@@ -217,7 +217,7 @@ fieldset[disabled] .btn-google.focus {
   padding: 0px 5px;
   resize: none;
   border: none;
-  color: inherit;
+  color: #212529;
   background-color: rgba(0, 0, 0, 0.05);
 }
 
@@ -393,6 +393,19 @@ form p {
 
   #search-bar input {
     width: 100px;
+  }
+
+  form.create-nugget {
+    width: 90%;
+  }
+
+  #headerLogo {
+    margin-left: 0px;
+    margin-top: -5px;
+  }
+
+  .nav-link {
+    padding-right: 0px !important;
   }
 }
 
