@@ -2,6 +2,12 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  -webkit-text-fill-color: #212529;
+  /* Override iOS / Android font color change */
+  -webkit-opacity: 1;
+  /* Override iOS opacity change affecting text & background color */
+  color: #212529;
+  /* Override IE font color change */
 }
 
 html {
