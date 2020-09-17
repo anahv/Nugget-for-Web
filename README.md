@@ -2,6 +2,8 @@
 
 Nugget is a web application where you can add and manage nuggets of wisdom.
 
+![Nugget Web App Gif Demo](/public/nuggetWeb.gif)
+
 ![Nugget Web App dashboard screenshot](/public/dashboardScreenshot.png)
 
 This app handles authentication with Passport.js and has Google log in available.
