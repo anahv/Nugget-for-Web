@@ -2,7 +2,7 @@
 
 Nugget is a web application where you can add and manage nuggets of wisdom.
 
-It shows a Mental Model of the Day, which takes a mental model from a RESTful API I built, check it out [here](https://github.com/anahv/Mental-Models-API) 
+It shows a Mental Model of the Day, which takes a mental model from a RESTful API I built, check out the repo [here](https://github.com/anahv/Mental-Models-API). 
 
 **Coming soon**: get a text message to remind you of a random nugget you saved, using Twilio.
 
